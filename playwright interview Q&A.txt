@@ -1,0 +1,636 @@
+Finally got it thank god..!!!
+
+https://github.com/rockysandeep0909/playwrightFrameworkJS
+
+1.What is Playwright?
+Playwright is an open-source automation testing tool developed by Microsoft.
+It is used to automate web browsers and test web applications automatically instead of testing them manually.
+
+2. Why is Playwright used in Automation Testing?
+Playwright is used to check if a website or web app works correctly by simulating how a real user behaves.
+Here’s why teams use Playwright:
+can identify bugs in the early stages
+cross browser testing
+fast and smarter
+1. Automates user actions
+2. Cross-browser testing
+3. Fast and reliable tests
+4. Tests like a real user
+5. Easy debugging and parallel execution
+6. Works in CI/CD pipelines.
+
+3.how is playwright different from selenium or cypress
+Playwright is faster and more reliable than Selenium because it has built-in waiting and direct browser control. Compared to Cypress,
+Playwright supports more browsers, multiple languages, and better parallel execution. Selenium is preferred for legacy systems, Cypress for simple front-end tests, 
+and Playwright for modern automation frameworks.
+
+4.how do u install playwright and setit up for a new project
+To install Playwright, install Node.js and Visual Studio Code, initialize a project using npm init playwright@latest, then run npx playwright test to execute tests. 
+Playwright automatically downloads browsers and sets up the configuration.
+
+5.what are locators in playwritgh..??
+Locators in Playwright are used to identify web elements so automated tests can interact with them, like clicking, typing, and verifying text.
+
+6.whats the diferene btwn page.click() and locator.click()
+page.click() clicks an element immediately and may fail if the element is not ready, 
+while locator.click() automatically waits, retries, and interacts reliably with dynamic elements.
+
+7.how does playwright handle waits automatically
+Playwright automatically waits for elements to be visible, enabled, and stable before interacting, and retries actions until conditions are met. 
+This eliminates the need for manual sleeps and reduces flaky tests.
+
+8.how do u handle dropdown and input fields
+In Playwright, input fields are handled using fill() and type(). For dropdowns, selectOption() is used for HTML select elements, 
+and click-based selection is used for custom dropdowns.
+Select by value
+Select by label
+Select by index
+
+9 how do u take screenshots and record video in playwright
+In Playwright, screenshots are taken using page.screenshot() and videos are enabled in playwright.config.
+js using the video option. Playwright also automatically captures screenshots and videos on test failure when configured.
+eg: 🔹 1. Take screenshot of full page-->await page.screenshot({ path: 'page.png' });
+🔹 2. Take screenshot of visible area-->await page.locator('#loginBtn').screenshot({ path: 'loginBtn.png' });
+🔹 3. Screenshot on test failure (Auto).module.exports = {
+  use: {
+    screenshot: 'only-on-failure',
+  }
+};
+
+10.how can u open multiple browser tabs or contexts
+Tabs are created using context.newPage() and share session data, while contexts are created using browser.newContext() and 
+provide isolated browser sessions like incognito windows.
+
+11. whats the difference btwn page,browser and browsercontext
+Browser is the main instance, BrowserContext is an isolated session like incognito, and Page is a single browser tab inside that session.
+    const context = await browser.newContext();
+    const page = await context.newPage();
+
+
+12. how do u handle alerts and popups in plawright
+In Playwright, JavaScript alerts are handled using the dialog event with accept or dismiss actions.
+ Browser popups are managed using waitForEvent('page'), and permissions are controlled using browser context options.
+
+13. how do u emulate mobile device or geolocation
+Playwright emulates mobile devices using predefined device descriptors like iPhone and Pixel, and sets geolocation using browser context configuration with latitude and longitude values.
+
+14. how do u handle different browser windows in playwright
+New browser windows are handled using context.waitForEvent('page'), and Playwright returns a Page object that allows switching and interacting with the new window.
+
+15. what command is used to generate playwright test automatically
+The npx playwright codegen command records user actions and generates Playwright automation scripts automatically.
+
+16. How do you set up a Playwright project with TypeScript
+install node.js and vs code and create a folder npm init playwright@latest and automatically all playwright libraries and modules will be installed
+
+17.Explain the folder structure you prefer for Playwright tests
+I prefer a modular folder structure using Page Object Model.
+All tests inside tests/, all page classes inside pages/, reusable utilities under utils/, fixtures under fixtures/, and configurations under config/.
+This helps maintain test scalability, readability, and reusability.”
+
+18 What is the benefit of using fixtures in Playwright test runner
+“Fixtures in Playwright provide reusable, isolated test setup. They help avoid repeated code, maintain clean test structure, 
+manage automatic setup and teardown, and ensure independent test execution. With custom fixtures, we can pre-login users, prepare test data, 
+and improve both speed and maintainability of the framework.”
+
+19. How do you handle environment-specific configs in Playwright
+I handle environment-specific configs in Playwright using multiple configuration files or environment variables.
+Each environment (dev/qa/stage/prod) has its own baseURL and credentials.
+I select the environment during test execution using --config or env variables.
+This keeps tests clean, scalable, and easily switchable between environments.”
+
+20 How do you wait for elements without using sleep
+I never use sleep() in Playwright.
+Playwright has built-in auto-waiting, and I rely on smart waits like waitForSelector, locator.waitFor(), navigation waits, and assertion waits.
+These waits are stable, retry automatically, and prevent flaky tests.”	
+
+21. Explain the difference between locator and elementHandle
+“A Locator is Playwright’s modern, recommended way to find elements.
+It auto-waits, re-finds the element every time, and prevents flaky tests.
+ElementHandle is a low-level reference to a DOM element, does not auto-wait, and may become stale.
+Locators should be used for all test interactions, while ElementHandle is used only for rare advanced operations.”
+A locator does NOT store the element.
+It finds the element fresh every time before performing an action.
+An ElementHandle is like a direct pointer to an element (similar to Selenium’s WebElement).
+
+22. How do you handle multiple browser contexts in one test
+“To handle multiple browser contexts in one test, I create new contexts using browser.newContext().
+Each context behaves like an independent browser with separate cookies and storage, allowing me to simulate multiple users in the same test.
+Inside each context, I create separate pages. This is commonly used for chat apps, admin vs user flows, or multi-user scenarios.
+
+23.8. How do you manage authentication flows (UI login)
+“I manage authentication in Playwright using the below approaches.
+For full end-to-end coverage, I automate UI login by filling the username/password and verifying navigation.
+
+23. which is the modren of locating an element in playwright
+“The modern way to locate elements in Playwright is using locator() with user-facing selectors like 
+getByRole, getByText, and getByTestId, instead of XPath or old DOM-based selectors.”
+
+24. 11. Difference between page.waitForSelector and locator.waitFor
+✅ Use locator.waitFor() always in modern Playwright code
+It is more reliable, especially for React/Angular/Vue dynamic UIs.
+❌ Avoid page.waitForSelector() unless you have a very specific old-style use-case.
+
+25.  12. How do you deal with flaky tests in Playwright
+I reduce flaky tests by using Playwright’s auto-waiting locators, proper wait states, retries, stable selectors,
+disabling animations, ensuring clean test data, and using trace/debug tools. 
+I avoid manual timeouts and ensure each test is independent and stable. 
+
+26.  13. How do you record and generate code using Playwright codegen
+To record and generate code in Playwright, I use the npx playwright codegen command. 
+It opens a browser that auto-generates test code as I interact with the site. I can specify a URL, choose a language target, and output the script to a file. 
+Codegen helps quickly bootstrap tests with reliable locators and built-in waits
+
+27.14. How do you handle file uploads and downloads
+File Uploads
+Cannot interact with OS file dialog
+Use setInputFiles() to directly attach files
+Supports single, multiple, and clearing uploads
+File Downloads
+Use page.waitForEvent("download")
+Then call download.path() OR download.saveAs()
+Works reliably with Playwright’s auto-wait and event handling
+
+28. 15. How do you run tests in parallel and when should you disable parallel mode
+Playwright runs tests in parallel by default using multiple workers.
+You can control parallel execution using workers, fullyParallel, and test.describe.serial.
+You disable parallel mode when tests depend on shared data, modify the same backend state, 
+use the same user account, or when the test flow must run step-by-step without interference.
+
+29. 17. How do you capture screenshots, videos, and traces for debugging
+1. On Test Failure (recommended)
+Add this to your playwright.config.ts:
+use: {
+  screenshot: 'only-on-failure',
+}
+✔️ 2. Always Capture Screenshot
+use: {
+  screenshot: 'on',
+}
+✔️ 3. Capture screenshot manually
+await page.screenshot({ path: 'screenshots/login.png', fullPage: true });
+
+Enable video recording in config
+use: {
+  video: 'on', // record all tests
+}
+Other options:
+"retain-on-failure"
+"on-first-retry"
+Example:
+use: {
+  video: 'retain-on-failure',
+}
+✔️ Change video resolution
+use: {
+  video: {
+    mode: 'on',
+    size: { width: 1280, height: 720 }
+  }
+I enable screenshots, videos, and traces using Playwright’s use configuration.
+screenshot: "only-on-failure"
+video: "retain-on-failure"
+trace: "retain-on-failure"
+Playwright automatically stores these artifacts in the test results folder and shows them in the HTML report.
+Traces are especially useful because they contain logs, snapshots, timelines, network calls, and a step-by-step replay of the test.
+
+30.  18. How do you handle iframes and shadow DOM in Playwright
+To handle iframes, I use frameLocator() to target elements inside an iframe.
+Example: page.frameLocator('#iframe').locator('#username').fill().
+For Shadow DOM, Playwright automatically pierces the shadow boundary, so normal locators work. If needed, I can use :shadow selector.
+Playwright makes both iframe and shadow DOM handling easier compared to Selenium.  
+
+31.  19. How do you share state or data across tests using fixtures 
+You share state or data across tests in Playwright using fixtures.
+Fixtures allow you to define reusable data, such as user objects, tokens, or authenticated pages, and inject them into any test using dependency injection.
+The common pattern is using test.extend() to create a fixture and then using it in multiple tests. This avoids global variables and keeps tests isolated and reliable.
+
+32.  20. How do you write a custom helper function for repeated actions
+I write custom helper functions to avoid repeating the same code in multiple tests.
+I usually create a utility file or a Page Object file and define reusable methods such as login(), addToCart(), or search().
+Then I import and use these functions inside the tests to keep the test code clean and maintainable.
+
+33. 21. How do you run tests on different browsers (Chromium, WebKit, Firefox)
+Playwright allows cross-browser testing using projects in the config.
+I define projects for Chromium, Firefox, and WebKit, and Playwright runs the same test suite across all browsers automatically.
+I can run a specific browser using --project in the CLI.
+This ensures cross-browser coverage with minimal configuration.
+or
+import { defineConfig, devices } from '@playwright/test';
+
+export default defineConfig({
+  projects: [
+    {
+      name: 'Chromium',
+      use: { browserName: 'chromium' }
+    },
+    {
+      name: 'Firefox',
+      use: { browserName: 'firefox' }
+    },
+    {
+      name: 'WebKit',
+      use: { browserName: 'webkit' }
+    }
+  ]
+});
+
+34. 22. How do you integrate Playwright with Jenkins or other CI tools
+
+
+35. 23. How do you test role-based access in a Playwright setup
+
+36. 25. How do you structure page object files in Playwright with JavaScript 
+Element	        Location
+Locators	Inside page object
+Actions	        Inside page object
+Tests	        In tests/ folder
+Reusable functions	In utils/
+Configurations	In playwright.config.js
+
+What is Page Object Model (POM)?
+POM means creating separate classes for each UI page.
+Each class contains:
+locators
+methods (actions)
+assertions (optional)
+Your test file becomes clean, and all logic stays inside the page class.
+
+37. 26. How do you read data from JSON or external files for data-driven tests
+
+38. How do you disable animations or reduce load for faster tests
+run test in headless mode and use prper waits for an element and still more if u google
+
+39. 29. How do you debug Playwright tests effectively
+To debug Playwright tests effectively, I usually run them in headed mode or use the --debug command to open the Playwright Inspector. I also insert page.pause() to stop execution and explore the DOM interactively.
+I use VS Code breakpoints for step-by-step debugging. When tests fail in CI, I rely on Playwright Tracing, screenshots, and videos.
+These tools help me understand locator issues, timeouts, network failures, and flakiness very quickly.
+
+40.30. Explain how you would build a scalable Playwright automation framework---------------> need to undestand still more
+
+Build around POM + fixtures + small independent tests, optimize with storageState + worker fixtures for speed,
+ protect reliability with locators and smart waits, and integrate with CI to produce artifacts (HTML, JUnit, traces). 
+Start small (smoke/regression) and iterate: measure runtimes, kill flakiness, and scale horizontally.
+
+41. what is auto waiting in palywright and how does it improve stability
+Auto-waiting is a built-in feature in Playwright that automatically waits for certain conditions before performing actions on web elements. 
+This helps ensure that the page is ready before Playwright interacts with it.
+Instead of you writing manual waits (waitForTimeout, sleep, etc.), Playwright intelligently waits until:
+The element appears in the DOM
+The element becomes visible
+The element is enabled
+The page finishes loading or navigating
+Bad Practice (Manual wait)
+await page.waitForTimeout(5000);  // unreliable and slow
+Good Practice (Use auto-waiting)
+await page.locator('#submit').click();
+
+42.what are test fitures and how it is used in playwright
+A test fixture in Playwright is a reusable setup/cleanup function that provides test data or environment setup to tests and improves test maintainability and performance.
+
+43. how do u handle authentication in playwright
+Authentication in Playwright is handled by logging in once and saving session state using storageState, 
+then reusing it across tests, or by authenticating via API for faster execution.
+
+44.  what is playwright trace viewer and how it is used
+Playwright Trace Viewer is a debugging tool that records everything that happens during a test run 
+and lets you replay the test step by step like a video to find exactly where and why a test failed.
+
+45. what configuration options are available in config.js
+Playwright’s config file allows control over test execution, parallelism, retries, browser selection, reporting, tracing, 
+and environment settings using options like workers, projects, use, and reporter.
+
+46. how do u skip or tagtests for selective  execution
+Tests can be skipped using test.skip(), focused with test.only(), and selectively executed using tags combined with
+ --grep and --grep-invert.
+
+47. how do u handle file uploads and dowloads 
+Playwright handles uploads using setInputFiles() and downloads using the download event, allowing validation and saving of files programmatically
+
+48. how do you setup retries for failes tests
+Retries in Playwright are configured using the retries option in the config file, per project, or via CLI with --retries, and are commonly enabled only in CI environments.
+
+49. how do u handle timeouts globaly or per tests
+Timeouts in Playwright can be configured globally in the config file, per test using test.setTimeout(), and per action or assertion through options.
+
+50. how do u parametrize tests in playwright
+Tests in Playwright are parameterized by looping through datasets, using fixtures, environment variables, or external files to run the same test with multiple inputs.
+
+51. howcan u run playwright tests headed and headless
+Playwright tests run in headless mode by default. To run with UI, use --headed or set headless: false in the config file.
+
+52. how do u use environmnet vairables with diferenet  test enviernomnets
+Different environments in Playwright are handled using environment variables loaded via .env files and dotenv, 
+allowing the same test suite to run across DEV, QA, and PROD.
+
+53. how do u implement reporting inplaywright
+Reporting in Playwright is implemented using built-in reporters like HTML, JSON, and JUnit, configured in playwright.config.ts, 
+and enriched with screenshots, videos, and trace support.
+
+54. how can u handle parallel execution
+Playwright handles parallel execution using worker processes, controlled via workers, test.describe.parallel(), and project configuration.
+
+55. how do you debug failure testcases effciently
+I debug failures in Playwright using Trace Viewer, headed runs, debug mode, screenshots, and video recordings to quickly identify the root cause.
+
+56. what are some common falkiness issues and how do u prevent it
+Common flakiness issues are timing problems, animations, dynamic locators, shared test data, network latency, and browser differences.
+Prevention includes using stable locators, auto-waiting, isolated contexts, retries, mocks, and capturing traces/videos for debugging.
+
+57 how do u ensures scalibility and mantianibilty in large playwrightproject
+Scalability and maintainability in large Playwright projects are ensured using Page Object Model, fixtures, parameterized tests,
+ modular utilities, centralized configs, stable locators, CI/CD integration, and proper reporting.
+
+58.  What strategies do you use to keep tests fast and maintainable as your app grows?------> vvery important
+To keep tests fast and maintainable, I use Page Object Model, helper functions, and fixtures to avoid repetitive code.
+I prefer API-based login to skip slow UI flows.
+I rely on reliable locators, auto-waiting, and avoid sleep.
+Tests run in parallel, and network mocking reduces dependency on backend.
+I also disable animations, cache browser installs in CI, store traces/screenshots only on failure, and organize tests with a scalable folder structure.
+All this keeps the suite clean, fast, and stable as the app grows.
+
+59. How would you implement a resilient test framework on top of Playwright, using Page Object Model and modular helpers?
+Best Practices to Make Framework Fully Resilient
+Use POM to store all class objects of each pages
+✔ Use data-driven approach
+Store all test data in JSON or YAML.
+✔ Use environment-based configs
+dev.qa.prod separation.
+✔ Use CI/CD integration
+Run tests in GitHub Actions, Jenkins, Azure DevOps.
+✔ Add parallelism
+Run tests in multiple workers.
+✔ Keep pages clean
+No unnecessary logic in POM.
+✔ Keep helpers generic
+Helpers must not depend on specific page logic.
+
+60. What locator strategies do you use for complex elements, like regex, ARIA roles, or nested selectors?
+“I prefer stable Playwright locators like ARIA roles and test IDs.
+For complex elements, I use nested selectors with :has(), regex-based text matching, and locator chaining. 
+I also use filters like filter({ hasText }) or filter({ has }) to precisely target dynamic UI structures. 
+These strategies help create robust and maintainable selectors.”
+
+61. How do you integrate Playwright into your CI/CD pipeline and generate rich test reports?
+“Yes, Playwright integrates easily with CI/CD. I set up a pipeline step to install dependencies, 
+install Playwright browsers, and run npx playwright test. I configure reporters like HTML or Allure, 
+and then upload the report as an artifact. For debugging, I enable traces, videos, and screenshots. 
+This gives a full visual report of failures and makes the pipeline stable and easy to maintain.”
+
+62.8.  When a test is flaky, how do you use Playwright’s Trace Viewer to debug it?
+“To debug flaky tests, I enable Playwright’s tracing (trace: "on-first-retry"). When a test fails intermittently, 
+Playwright generates a trace.zip file. I open it using npx playwright show-trace. This lets me see a timeline of events, 
+DOM snapshots before and after each action, locator retries, network requests, console errors, and page states.
+I identify if the failure was due to slow network responses, unstable locators, animations, overlapping elements, or timing issues.
+This helps me reliably fix the root cause of the flakiness.”
+
+63.How do you handle dynamic UI elements that appear unpredictably, beyond the built‑in auto‑waiting?
+Even though Playwright auto-waits, dynamic UI requires additional techniques. I use explicit waits, locator.waitFor(), race conditions, polling with expect.poll, and API-syncing waits. 
+I also check optional elements using count(), add retry logic, and sync the UI with network events. 
+This ensures stability even when elements appear unpredictably.
+
+64. implicit and explicit wait in playwright
+“Playwright does not support implicit waits like Selenium. Instead, it has built-in auto-waits for elements and actions. 
+When I need more control, I use explicit waits such as waitForSelector, locator.waitFor(), or waitForResponse to wait for conditions like visibility, navigation, or API completion.”
+
+65.How do you perform mouse and keyboard actions?
+await page.mouse.move(100, 200);
+await page.mouse.click(100, 200);
+
+await page.keyboard.type('Hello Playwright');
+await page.keyboard.press('Enter');
+
+66.How do you wait for an element in Playwright?
+await page.waitForSelector('#username');
+
+67. How do you run a specific test file or test case? 
+npx playwright test tests/login.spec.js  or use test.only in the testcase next to test
+
+68. How do you handle slow-loading elements?
+Use explicit timeouts or waitForSelector.
+await page.waitForSelector('#dashboard', { timeout: 10000 });
+
+69. How do you run tests in multiple browsers?
+projects: [
+  { name: 'chromium', use: { browserName: 'chromium' } },
+  { name: 'firefox', use: { browserName: 'firefox' } },
+  { name: 'webkit', use: { browserName: 'webkit' } }
+]
+
+70. How do you click an element that is hidden or not visible?
+Use force: true but only if necessary.
+await page.click('#hiddenBtn', { force: true });
+
+71. Login page redirects to dashboard only sometimes — how do you stabilize the test?
+Use assertions
+Use waitForLoadState("networkidle")
+Use locator-based waits
+await page.waitForLoadState('networkidle');
+await expect(page.locator('#dashboard')).toBeVisible();
+
+72. How do you skip or tag tests?6
+test.skip('not ready');
+test('smoke test', { tag: '@smoke' }, async () => {});
+
+73. What is expect.soft() in Playwright?
+Soft assertions allow the test to continue even if an expectation fails.
+expect.soft(page.locator('#msg')).toHaveText('Success');
+At the end, Playwright still reports failures.
+
+74. What is the difference between beforeEach and beforeAll in Playwright?
+beforeEach: runs before each test → gives fresh browser/context
+beforeAll: runs once → shared context (not isolated)
+
+75. How do you test web applications built with React/Angular/Vue?
+Use React locators like:
+await page.getByRole('button', { name: 'Submit' }).click();
+Playwright uses accessibility locators → avoids unstable CSS selectors.
+
+76. How do you handle web elements that change IDs dynamically?
+Use stable selectors:
+role based
+text based
+nth element
+CSS structure
+await page.getByRole('button', { name: 'Login' }).click();
+
+77. What is the test isolation model in Playwright?
+Each test gets:
+a new BrowserContext
+its own cookies/session
+independent storage
+This ensures cleaner and more reliable tests.
+
+78.How do you test uploading multiple files?
+await page.setInputFiles('#upload', [
+  'file1.png',
+  'file2.pdf'
+]);
+Eg: await page.locator("hhhh").setInputFiles("\\path in doubleforwrd slash")
+
+79. How do you test if an element does NOT exist?
+await expect(page.locator('#error')).toHaveCount(0);
+
+80. What is Web-First Assertions?
+Assertions retry automatically until timeout.
+await expect(page.locator('#success')).toBeVisible();
+No need for waitForSelector.
+
+81. How do you open developer tools in Playwright?
+Use debug mode:
+npx playwright test --debug
+Stops at breakpoints, allows stepping through test.
+
+82. How do you test applications with dynamic IDs (React apps)?
+Avoid CSS selectors. Use:
+getByRole
+getByText
+getByPlaceholder
+getByLabel
+nth match
+await page.getByRole('button', { name: 'Submit' }).click();
+
+83.How do you implement retries for flaky tests?
+playwright.config.js:
+retries: process.env.CI ? 2 : 0
+
+84. Your test is failing intermittently. What would you do?
+Check:
+Race conditions
+Network delays
+Unstable selectors
+Missing waits
+API backend delays
+Animations (use force: true or disable)
+Enable tracing + video to debug.
+
+85.How do you run tests sequentially?
+npx playwright test --workers=1
+
+86. How do you read data from Excel/CSV in Playwright?'
+const XLSX = require("xlsx");
+
+87. What is the difference between locator.click() and page.click()?
+page.click	              locator.click
+Immediately tries to click	Auto-retries
+Less stable	                More stable
+Deprecated	                Recommended
+
+88. How do you upload folders?
+Playwright doesn't support folder upload — must compress before upload.
+
+89.How do you bypass a CAPTCHA in tests?
+You don't automate CAPTCHA — you:
+Use test bypass key
+Disable CAPTCHA in test environment
+Mock API
+
+90. What is the difference between strict locators and non-strict?
+Strict locator only allows one unique element.
+expect(locator).toHaveCount(1);
+
+91.How do you verify email OTP using Playwright?
+Access email API (Mailosaur, Gmail API, Mailtrap)
+Parse OTP from email
+Fill OTP field
+
+92. How do you implement Page Object Model (POM) in Playwright?
+Create class:
+class LoginPage {
+  constructor(page) { this.page = page; }
+  async login(u,p) {...}
+}
+Then use it in test
+
+93. How do you set cookies manually?
+await context.addCookies([{ name:'token', value:'123', domain:'example.com' }]);
+
+94. How do you automatically rerun only failed tests?
+npx playwright test --last-failed
+
+95. difference btwn
+test.only → runs only the selected test
+test.skip → skips a test
+test.fixme → marks a known failing test
+test.describe → groups related tests
+
+96. Difference between page.locator() and page.$()?
+“page.locator() is the modern Playwright API that auto-waits and re-evaluates elements, making tests stable and reliable. 
+page.$() returns a static element handle without auto-wait and is discouraged because it causes flaky tests.”
+
+97.How do you handle dynamic elements or elements with changing locators?
+
+98. loggers priority ---> need to change in logger file---> level :'info',  change info to silly to access all 
+{
+  error: 0,
+  warn: 1,
+  info: 2,
+  http: 3,
+  verbose: 4,
+  debug: 5,
+  silly: 6
+}
+
+
+99. Xpath  -->absolute xpath[/]  --->
+relative Xpath[//] is prefered and below are used
+//input[@id='username']
+//input[@type='text' and @name='email']
+//button[text()='Login']
+//button[contains(text(),'Log')]
+ 
+100. Visual testing in playwright
+Visual testing in Playwright means comparing screenshots of your UI against a baseline to catch UI regressions like
+(layout shifts, color changes, missing elements, etc.)
+test.skip ("visual testing", async ({page}) => {
+    await page.goto("https://www.instagram.com/")
+    await page.waitForTimeout(5000)//----->important to take ss
+    expect(await page.screenshot()).toMatchSnapshot("insta.png")   or   await expect(page).toHaveScreenshot('homepage.png');
+})
+
+101. How do you handle frames and multiple tabs/windows?
+Frames are handled using frameLocator() or page.frame(), 
+while multiple tabs or windows are handled by capturing the new Page object from the browser context and switching between them.
+
+102. What assertion would you write for an input element?
+For an input element, assertions typically verify its value, visibility, enabled state, placeholder, and attributes using uPlaywright’s web-first assertions.
+
+103. How do you check the number of dropdown options, and verify if (Bangalore, Hyderabad, Pune) are present?
+const options = page.locator('#city option');
+await expect(options).toHaveCount(3);
+
+104. How to handle authentication pop-ups in Playwright?
+
+105. How would you implement a custom reporter in Playwright?
+
+106. How to handle dynamic elements in Playwright?
+Dynamic elements in Playwright are handled using auto-wait, stable locators, web-first assertions, and condition-based waits instead of hard timeouts.
+
+107. What are some debugging techniques in Playwright?
+Playwright provides Inspector, tracing, screenshots, videos, and debug mode to efficiently analyze and fix test failures.
+
+108. How would you test a multi‑tab workflow or user flows that span multiple browser contexts?
+
+109. What’s the difference between workers and sharding for parallel execution, and when do you choose each?
+Workers provide parallel execution on a single machine, 
+while sharding splits tests across multiple machines for large-scale parallelism.
+
+110. Describe using Playwright with Java or another language, what are the key differences from JavaScript/TypeScript?
+“JavaScript and TypeScript are Playwright’s primary languages with full feature support, built-in test runner, and fixtures. 
+Java is a client binding that uses JUnit or TestNG, has blocking APIs, and slightly fewer features, 
+but is easier for Selenium teams to adopt.”
+
+
+
+/html/body/ntp-app//div/div[2]/cr-searchbox//div[1]/input
+1.need to ask relative xpath
+2.need to ask dropdown all 3 in yatra.com
+3..env files
+4. browser fixture
+5. file download needs to be shown fileupload is fine
+6. iframes
+7. pushing code to github
+8 popups and alert 
+
+
+
