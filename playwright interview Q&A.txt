@@ -620,7 +620,7 @@ while sharding splits tests across multiple machines for large-scale parallelism
 Java is a client binding that uses JUnit or TestNG, has blocking APIs, and slightly fewer features, 
 but is easier for Selenium teams to adopt.”
 
-
+.
 
 /html/body/ntp-app//div/div[2]/cr-searchbox//div[1]/input
 1.need to ask relative xpath
