@@ -1323,7 +1323,22 @@ function inter(arr,arr1){
 }
 console.log(inter([1,2,3,5],[3,4,5]))
 
-100. palindrome or not
+100. prime or not
+for (let num = 2; num <= 20; num++) {
+  let prime = true;
+
+  for (let i = 2; i < num; i++) {
+    if (num % i === 0) {
+      prime = false;
+      break;
+    }
+  }
+
+  if (prime) {
+    console.log(num);
+  }
+}
+
 
 
     
