@@ -88,7 +88,7 @@ I prefer a modular folder structure using Page Object Model.
 All tests inside tests/, all page classes inside pages/, reusable utilities under utils/, fixtures under fixtures/, and configurations under config/.
 This helps maintain test scalability, readability, and reusability.”
 
-18 What is the benefit of using fixtures in Playwright test runner
+18 What is the benefit of using fixtures in Playwright test runner---------->need to read again
 “Fixtures in Playwright provide reusable, isolated test setup. They help avoid repeated code, maintain clean test structure, 
 manage automatic setup and teardown, and ensure independent test execution. With custom fixtures, we can pre-login users, prepare test data, 
 and improve both speed and maintainability of the framework.”
@@ -291,7 +291,7 @@ A test fixture in Playwright is a reusable setup/cleanup function that provides 
 environment setup to tests and improves test maintainability and performance.
 
 43. how do u handle authentication in playwright
-Authentication in Playwright is handled by logging in once and saving session state using storageState, 
+in Playwright is handled by logging in once and saving session state using storageState, 
 then reusing it across tests, or by authenticating via API for faster execution.
 
 44.  what is playwright trace viewer and how it is used
@@ -884,6 +884,20 @@ safely merge code. This ensures quality, traceability, and stable releases.”
 “I organize my automation repository in a modular and scalable way using clear folder structures, Page Object Model, reusable 
 utilities, proper configuration management, and CI/CD integration. This ensures the codebase is easy to maintain, extend, and 
 collaborate on.”
+
+149. await page.waitForTimeout() does NOT wait for any locators at all.
+It simply pauses the test execution for the given time.
+using hard wait is flaky time consuming and not reliable
+
+150. const context = await browser.newContext();
+     const page = await context.newPage();
+“browser.newContext() creates a fresh, isolated browser context, similar to an incognito window. context.newPage() 
+then opens a new tab inside that context. This allows test isolation so cookies, cache, and storage are not shared between tests.”
+Eg :-
+Browser	        Chrome application
+BrowserContext	Incognito window
+Page	        Tab inside incognito
+
 
 
 /html/body/ntp-app//div/div[2]/cr-searchbox//div[1]/input
